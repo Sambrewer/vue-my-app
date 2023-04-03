@@ -6,7 +6,7 @@ import { TimelinePost, today, thisWeek, thisMonth } from "../posts"
 import { usePosts } from "../stores/posts"
 import TimelineItem from "./TimelineItem.vue"
 
-const postStore = usePosts()
+const postsStore = usePosts()
 
 const periods = ["Today", "This Week", "This Month"] as const
 
@@ -19,8 +19,9 @@ function selectPeriod (period: Period) {
 }
 
 const posts = computed<TimelinePost[]>(() => {
-    return [ today, thisWeek, thisMonth ]
-        .map(post => {
+    return postsStore.ids
+        .map(id => {
+            const post = postsStore.all.get(id)
             return {
                 ...post,
                 created: DateTime.fromISO(post.created)

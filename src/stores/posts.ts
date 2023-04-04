@@ -41,7 +41,14 @@ export const usePosts = defineStore("posts", {
             this.all = all
         },
         createPost (post: TimelinePost) {
-            
+            const body = JSON.stringify({ ...post, created:  post.created.toISO() })
+            return window.fetch("http://localhost:8000/posts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body
+            })
         }
     },
 
@@ -61,8 +68,9 @@ export const usePosts = defineStore("posts", {
                     }
                 })
                 .filter(post => {
+                    console.log(state.selectedPeriod, post.created.toISO())
                     if (state.selectedPeriod === "Today") {
-                        return post.created >= DateTime.now().minus({ day: 1 })
+                        return post.created >= DateTime.now().minus({ days: 1 })
                     }
         
                     if (state.selectedPeriod === "This Week") {

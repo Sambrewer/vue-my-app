@@ -63,7 +63,7 @@ async function handleClick () {
     router.push("/")
 }
 </script>
-
+<!-- this is my stuff -->
 <template>
     <div class="columns">
         <div class="column">
